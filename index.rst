@@ -91,6 +91,15 @@ Since the Camera is no longer doing firmware crosstalk correction, moving the co
 
 The Butler interactions are handled via the Python API for export and import, and, for simplicity of invocation, the command line tooling for ingest and pipeline execution.
 
+Using a batch queue mechanism for firing off the pipeline execution is attractive in that the HTTP handler would not need to persist for the lifetime of the pipeline, and resilience and elasticity could be built into the batch system.
+On the other hand, it poses serious issues with regard to latency and/or communications.
+If the batch system were to be triggered where ``pipetask`` is invoked in the current design, the latency of batch submission, queueing, dequeueing, and execution startup would be in the critical path.
+In addition, it would be difficult to preload data for the batch job, as it would presumably be on a different batch worker machine.
+If the batch system were instead to be triggered immediately by the POST handler, latency would not be an issue.
+Instead, it would be difficult for the batch job to be notified of image arrival.
+Either a Butler poll (undesirable for reasons given above) or special messaging subscription code in the batch job would be necessary.
+Neither of these seems to offer much of an advantage over the simpler design of including the preload and pipeline execution in the same handler process, as long as that handler is resilient and elastically scalable, which it is.
+
 
 Prototype Implementation
 ========================
