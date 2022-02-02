@@ -19,8 +19,11 @@ Requirements
 
 The framework must execute Alert Production pipelines but also Commissioning pipelines and Calibration Products pipelines.
 
-It has no direct contact with the Summit systems.
-Instead, it receives a ``next_visit`` event and can observe the delivery of image files.
+As the framework runs at the US Data Facility (USDF), it does not speak the SAL/DDS messages of the Summit systems.
+All information from the Summit, including a ``next_visit`` event and image files, must be conveyed via other means.
+
+The ``next_visit`` event is defined in LSE-72 requirement OCS-DM-COM-ICD-0031.
+It specifies that advance notice of telescope pointings will be made available at least 20 seconds in advance of the first exposure of a visit, and that this will include exposure duration, number of exposures, shutter motion start time, and filter selection, as well as an indication of the image purpose.
 
 Latencies and overheads must be minimized.
 Since the Alert Production timeline is only 60 seconds from close of shutter on the last exposure of the visit, latencies on the order of seconds and potentially tenths of seconds do matter.
