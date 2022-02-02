@@ -104,6 +104,8 @@ Instead, it would be difficult for the batch job to be notified of image arrival
 Either a Butler poll (undesirable for reasons given above) or special messaging subscription code in the batch job would be necessary.
 Neither of these seems to offer much of an advantage over the simpler design of including the preload and pipeline execution in the same handler process, as long as that handler is resilient and elastically scalable, which it is.
 
+This design, using only the ``next_visit`` event and image arrival notifications, isolates Prompt Processing to the greatest extent possible from the Summit systems, reducing complexity.
+No Commandable SAL Component (CSC) need be written to interface with the Summit; instead, it is possible for the 
 
 Prototype Implementation
 ========================
@@ -181,8 +183,11 @@ Message handling
 ----------------
 
 For Google Pub/Sub, it might be better to have a single subscription per worker, ignoring all messages that are unexpected (e.g. for older visits not processed by this worker).
-The messaging infrastructure will have to be replaced for on-premises usage, but all systems should have similar subscription mechanisms.
-There may be better channel filtering available to simplify this aspect of the prototype.
+The messaging infrastructure will have to be replaced for on-premises usage, but all reasonable choices should have similar subscription mechanisms.
+Other infrastructures may provide better channel filtering for the image arrival notifications to simplify this aspect of the prototype.
+
+The translation of the ``next_visit`` SAL event to an HTTP POST could be done by a salobj-based component, but it could also be integrated into the existing listener that generates Kafka messages for delivery to the EFD.
+Furthermore, it might be possible for the USDF to directly subscribe to the Kafka queue for this event, as the additional latency from Kafka is not likely to be critical in this application.
 
 Affinity
 --------
@@ -196,8 +201,8 @@ Fanout
 ------
 
 The current upload script sends a separate ``next_visit`` message for each detector.
-In actual usage, a single ``next_visit`` message would likely be sent from the Summit to the USDF.
-A USDF-based server (potentially the ingress mentioned above) would then translate this into multiple POSTs to the back-end worker infrastructure.
+In actual usage, a single ``next_visit`` message would likely be sent from the Summit to the USDF (e.g. via Kafka as mentioned above).
+A USDF-based server would then translate this into multiple POSTs to the back-end worker infrastructure.
 
 Output handling
 ---------------
