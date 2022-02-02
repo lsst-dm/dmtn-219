@@ -192,10 +192,11 @@ Furthermore, it might be possible for the USDF to directly subscribe to the Kafk
 Affinity
 --------
 
-It would be much more efficient to send images from a single detector to same the same worker each visit.
+It would be much more efficient to send images from a single detector to the same worker for each visit.
 This would allow caching and reuse of calibration information.
 Cloud Run has some affinity controls, but it's not clear that they would be sufficient for this.
 A custom on-premises ingress could likely do better.
+It is likely that the detector number would have to be part of the URL or the HTTP header in order to enable this affinity.
 
 Fanout
 ------
