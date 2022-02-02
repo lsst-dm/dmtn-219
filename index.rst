@@ -70,6 +70,7 @@ AMQP, MQTT, Redis, or possibly Kafka are potential mechanisms here, in addition 
 The trigger for image arrival could be sent by the Camera Control System after it believes it has successfully published the image, or it could be sent by the storage system.
 
 The four LSST Middleware interactions needed by the framework are:
+
  * On startup, initialize a handler-local Butler repo and copy globally-used calibrations.
  * On receipt of ``next_visit``, copy calibrations, templates, and potentially APDB data required by the pipeline into the handler-local repo.
  * On receipt of an image, ingest its metadata.
