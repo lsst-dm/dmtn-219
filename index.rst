@@ -141,7 +141,7 @@ To minimize the old notifications that a worker might see, the subscription is c
 The worker also checks to see if any snap images arrived before the subscription could be created (if ``next_visit`` was not sent early enough and if the exposure time is short, such as with bias images).
 
 The POST message contains all information needed to start preparing the handler-local repo for the visit.
-The repo preparation will depend on selected pipeline; it could be chosen based on next_visit information (but is currently fixed).
+The repo preparation will depend on selected pipeline; it could be chosen based on ``next_visit`` information (but is currently fixed).
 
 After the repo is prepared, the prototype begins waiting for snaps.
 It blocks waiting for one or more Pub/Sub messages.
@@ -150,7 +150,7 @@ The list of notifications is searched for the expected instrument/detector/group
 If present, the image is ingested.
 All received messages are acknowledged to ensure that the subscription queue is cleared out.
 
-When all snaps have arrived, the pipeline, as chosen by next_visit, is executed.
+When all snaps have arrived, the pipeline, as chosen by ``next_visit``, is executed.
 Upon successful completion, the handler returns a 200 status from Flask.
 Any exceptions or errors, including timeouts from failing to receive image notifications, are handled by a separate error handler that logs the problem and returns a 500 status.
 At the end of the visit, the dynamic Pub/Sub subscription is deleted.
