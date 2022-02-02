@@ -17,7 +17,7 @@ Additional features and optimizations that could be incorporated later are also 
 Requirements
 ============
 
-The framework must execute Alert Production pipelines but also Commissioning pipelines and Calibration Products pipelines.
+The framework must execute Alert Production pipelines but also Commissioning pipelines, Calibration Products pipelines, and Special Programs pipelines.
 
 As the framework runs at the US Data Facility (USDF), it does not speak the SAL/DDS messages of the Summit systems.
 All information from the Summit, including a ``next_visit`` event and image files, must be conveyed via other means.
