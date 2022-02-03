@@ -24,6 +24,8 @@ All information from the Summit, including a ``next_visit`` event and image file
 
 The ``next_visit`` event is defined in LSE-72 requirement OCS-DM-COM-ICD-0031.
 It specifies that advance notice of telescope pointings will be made available at least 20 seconds in advance of the first exposure of a visit, and that this will include exposure duration, number of exposures, shutter motion start time, and filter selection, as well as an indication of the image purpose.
+This event will also include a unique identifier for the visit.
+This unique identifier may be arbitrary; it need not be related to any particular exposure identifier or observing script identifier, but it must be made available to the command that is transferring the image from the Camera systems to Data Management.
 
 Latencies and overheads must be minimized.
 Since the Alert Production timeline is only 60 seconds from close of shutter on the last exposure of the visit, latencies on the order of seconds and potentially tenths of seconds do matter.
@@ -150,7 +152,7 @@ The list of notifications is searched for the expected instrument/detector/group
 If present, the image is ingested.
 All received messages are acknowledged to ensure that the subscription queue is cleared out.
 
-When all snaps have arrived, the pipeline, as chosen by ``next_visit``, is executed.
+When all snaps have arrived, ``butler define-visits`` is executed to define the visit, and then the pipeline, as chosen by ``next_visit``, is executed.
 Upon successful completion, the handler returns a 200 status from Flask.
 Any exceptions or errors, including timeouts from failing to receive image notifications, are handled by a separate error handler that logs the problem and returns a 500 status.
 At the end of the visit, the dynamic Pub/Sub subscription is deleted.
