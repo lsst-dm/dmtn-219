@@ -100,14 +100,25 @@ The Butler interactions are handled via the Python API for export and import, an
 Using a batch queue mechanism for firing off the pipeline execution is attractive in that the HTTP handler would not need to persist for the lifetime of the pipeline, and resilience and elasticity could be built into the batch system.
 On the other hand, it poses serious issues with regard to latency and/or communications.
 If the batch system were to be triggered where ``pipetask`` is invoked in the current design, the latency of batch submission, queueing, dequeueing, and execution startup would be in the critical path.
-In addition, it would be difficult to preload data for the batch job, as it would presumably be on a different batch worker machine.
+In addition, it would be difficult to preload data for the batch job, as the worker would not be known until batch submission.
 If the batch system were instead to be triggered immediately by the POST handler, latency would not be an issue.
 Instead, it would be difficult for the batch job to be notified of image arrival.
 Either a Butler poll (undesirable for reasons given above) or special messaging subscription code in the batch job would be necessary.
 Neither of these seems to offer much of an advantage over the simpler design of including the preload and pipeline execution in the same handler process, as long as that handler is resilient and elastically scalable, which it is.
 
-This design, using only the ``next_visit`` event and image arrival notifications, isolates Prompt Processing to the greatest extent possible from the Summit systems, reducing complexity.
-No Commandable SAL Component (CSC) need be written to interface with the Summit; instead, it is possible for the 
+One limitation of the design is that the pipeline to be executed generally must use data from a single detector/CCD only.
+The handler-local repo only has data for that detector, and there is no way to access data in other handlers' repos.
+An out-of-band, non-Butler mechanism could be invented to communicate gather/scatter information, but this would add substantial complexity and new code.
+If such pipelines were to be necessary, a shared repo would likely be needed.
+This repo would need substantial engineering to avoid being a performance bottleneck and a single point of failure.
+Rather than executing a pipeline per detector using the single-process activator, a pipeline per visit must be submitted to something like the Batch Production Service in order for data dependencies to be taken into account.
+This currently requires waiting until all detectors' images have arrived and been ingested, potentially increasing latency.
+Preloading data into worker memory would be difficult, especially for later stages in the pipeline that might have to be executed as separate jobs.
+Without that preload, the load and performance requirements on the shared repo would be even higher.
+
+The proposed design, using only the ``next_visit`` event and image arrival notifications, isolates Prompt Processing to the greatest extent possible from the Summit systems, reducing complexity.
+No Commandable SAL Component (CSC) need be written to interface with the Summit.
+
 
 Prototype Implementation
 ========================
