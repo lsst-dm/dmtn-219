@@ -82,6 +82,7 @@ class MiddlewareInterface:
         #     for dataset_type in self.src.registry.queryDatasetTypes(...)
         #     if dataset_type.isCalibration()
         # ]
+        self.calib_types = ["bias", "dark", "defects", "flat", "fringe",]
 
     def filter_calibs(dataset_ref, visit_info):
         for dimension in ("instrument", "detector", "physical_filter"):
