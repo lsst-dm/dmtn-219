@@ -14,6 +14,13 @@ from visit import Visit
 
 PROJECT_ID = "prompt-proto"
 
+verification_token = os.environ["PUBSUB_VERIFICATION_TOKEN"]
+config_instrument = os.environ["RUBIN_INSTRUMENT"]
+calib_repo = os.environ["CALIB_REPO"]
+image_bucket = os.environ["IMAGE_BUCKET"]
+oid_regexp = re.compile(r"(.*?)/(\d+)/(.*?)/(\d+)/\1-\3-\4-.*?-.*?-\2\.f")
+timeout = os.environ.get("IMAGE_TIMEOUT", 50)
+
 logging.basicConfig(
     # Use JSON format compatible with Google Cloud Logging
     format=(
@@ -26,13 +33,6 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 app = Flask(__name__)
-
-verification_token = os.environ["PUBSUB_VERIFICATION_TOKEN"]
-config_instrument = os.environ["RUBIN_INSTRUMENT"]
-calib_repo = os.environ["CALIB_REPO"]
-image_bucket = os.environ["IMAGE_BUCKET"]
-oid_regexp = re.compile(r"(.*?)/(\d+)/(.*?)/(\d+)/\1-\3-\4-.*?-.*?-\2\.f")
-timeout = os.environ.get("IMAGE_TIMEOUT", 50)
 
 subscriber = pubsub_v1.SubscriberClient()
 topic_path = subscriber.topic_path(
