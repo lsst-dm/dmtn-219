@@ -4,12 +4,6 @@
 
 .. sectnum::
 
-.. TODO: Delete the note below before merging new content to the main branch.
-
-.. note::
-
-   **This technote is not yet published.**
-
 The Prompt Processing framework has long been a gray area in the overall Rubin Observatory architecture.
 This document attempts to fill that hole by proposing a concrete design with an accompanying prototype implementation that should meet minimum requirements.
 Additional features and optimizations that could be incorporated later are also described.
