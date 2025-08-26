@@ -1,8 +1,14 @@
-:tocdepth: 1
+############################################
+Proposal and Prototype for Prompt Processing
+############################################
 
-.. Please do not modify tocdepth; will be fixed when a new Sphinx theme is shipped.
+.. abstract::
 
-.. sectnum::
+   The Prompt Processing framework has long been a gray area in the overall Rubin Observatory architecture.  This document attempts to fill that hole by proposing a concrete design with an accompanying prototype implementation that should meet minimum requirements.  Additional features and optimizations that could be incorporated later are also described.
+
+
+DOI: `10.71929/rubin/2585429 <https://doi.org/10.71929/rubin/2585429>`_
+
 
 The Prompt Processing framework has long been a gray area in the overall Rubin Observatory architecture.
 This document attempts to fill that hole by proposing a concrete design with an accompanying prototype implementation that should meet minimum requirements.
@@ -16,7 +22,7 @@ The framework must execute Alert Production pipelines but also Commissioning pip
 As the framework runs at the US Data Facility (USDF), it does not speak the SAL/DDS messages of the Summit systems.
 All information from the Summit, including a ``next_visit`` event and image files, must be conveyed via other means.
 
-The ``next_visit`` event is defined in LSE-72 requirement OCS-DM-COM-ICD-0031.
+The ``next_visit`` event is defined in `LSE-72 <https://ls.st/LSE-72>`_ :cite:labelpar:`LSE-72` requirement OCS-DM-COM-ICD-0031.
 It specifies that advance notice of telescope pointings will be made available at least 20 seconds in advance of the first exposure of a visit, and that this will include exposure duration, number of exposures, shutter motion start time, and filter selection, as well as an indication of the image purpose.
 This event will also include a unique identifier for the visit.
 This unique identifier may be arbitrary; it need not be related to any particular exposure identifier or observing script identifier, but it must be made available to the command that is transferring the image from the Camera systems to Data Management.
@@ -226,9 +232,7 @@ Autoscaling
 Configuring the auto-scaling properly to expand when a visit's processing runs long may take some tuning.
 Ideally, a hot spare set of nodes large enough for a visit should be on standby at all times.
 
-.. .. rubric:: References
+References
+==========
 
-.. Make in-text citations with: :cite:`bibkey`.
-
-.. .. bibliography:: local.bib lsstbib/books.bib lsstbib/lsst.bib lsstbib/lsst-dm.bib lsstbib/refs.bib lsstbib/refs_ads.bib
-..    :style: lsst_aa
+.. bibliography::
