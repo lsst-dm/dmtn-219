@@ -1,8 +1,13 @@
-:tocdepth: 1
+############################################
+Proposal and Prototype for Prompt Processing
+############################################
 
-.. Please do not modify tocdepth; will be fixed when a new Sphinx theme is shipped.
+.. abstract::
 
-.. sectnum::
+   The Prompt Processing framework has long been a gray area in the overall Rubin Observatory architecture.  This document attempts to fill that hole by proposing a concrete design with an accompanying prototype implementation that should meet minimum requirements.  Additional features and optimizations that could be incorporated later are also described.
+
+
+
 
 The Prompt Processing framework has long been a gray area in the overall Rubin Observatory architecture.
 This document attempts to fill that hole by proposing a concrete design with an accompanying prototype implementation that should meet minimum requirements.
