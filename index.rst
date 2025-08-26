@@ -231,9 +231,7 @@ Autoscaling
 Configuring the auto-scaling properly to expand when a visit's processing runs long may take some tuning.
 Ideally, a hot spare set of nodes large enough for a visit should be on standby at all times.
 
-.. .. rubric:: References
+References
+==========
 
-.. Make in-text citations with: :cite:`bibkey`.
-
-.. .. bibliography:: local.bib lsstbib/books.bib lsstbib/lsst.bib lsstbib/lsst-dm.bib lsstbib/refs.bib lsstbib/refs_ads.bib
-..    :style: lsst_aa
+.. bibliography::
