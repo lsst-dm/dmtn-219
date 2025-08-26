@@ -21,7 +21,7 @@ The framework must execute Alert Production pipelines but also Commissioning pip
 As the framework runs at the US Data Facility (USDF), it does not speak the SAL/DDS messages of the Summit systems.
 All information from the Summit, including a ``next_visit`` event and image files, must be conveyed via other means.
 
-The ``next_visit`` event is defined in LSE-72 requirement OCS-DM-COM-ICD-0031.
+The ``next_visit`` event is defined in `LSE-72 <https://ls.st/LSE-72>`_ :cite:labelpar:`LSE-72` requirement OCS-DM-COM-ICD-0031.
 It specifies that advance notice of telescope pointings will be made available at least 20 seconds in advance of the first exposure of a visit, and that this will include exposure duration, number of exposures, shutter motion start time, and filter selection, as well as an indication of the image purpose.
 This event will also include a unique identifier for the visit.
 This unique identifier may be arbitrary; it need not be related to any particular exposure identifier or observing script identifier, but it must be made available to the command that is transferring the image from the Camera systems to Data Management.
