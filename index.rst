@@ -7,6 +7,7 @@ Proposal and Prototype for Prompt Processing
    The Prompt Processing framework has long been a gray area in the overall Rubin Observatory architecture.  This document attempts to fill that hole by proposing a concrete design with an accompanying prototype implementation that should meet minimum requirements.  Additional features and optimizations that could be incorporated later are also described.
 
 
+DOI: `10.71929/rubin/2585429 <https://doi.org/10.71929/rubin/2585429>`_
 
 
 The Prompt Processing framework has long been a gray area in the overall Rubin Observatory architecture.
